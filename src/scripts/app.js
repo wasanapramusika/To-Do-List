@@ -23,3 +23,29 @@ function renderTodos() {
     todoList.appendChild(li);
   });
 }
+
+
+function updateTaskCounter() {
+  const activeCount = todos.filter(t => !t.completed).length;
+  taskCounter.textContent = `${activeCount} task${activeCount === 1 ? '' : 's'} remaining`;
+}
+
+// Modify renderTodos to invoke counter
+function renderTodos() {
+  todoList.innerHTML = '';
+
+  todos.forEach((todo) => {
+    const li = document.createElement('li');
+    li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+    li.dataset.id = todo.id;
+
+    li.innerHTML = `
+      <span class="task-text">${todo.text}</span>
+      <button class="delete-btn" aria-label="Delete task">&times;</button>
+    `;
+
+    todoList.appendChild(li);
+  });
+
+  updateTaskCounter();
+}
