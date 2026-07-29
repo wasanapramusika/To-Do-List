@@ -1,8 +1,3 @@
-// script.js - Complete Application Logic
-
-// ==========================================
-// 1. DOM Element References
-// ==========================================
 const todoForm = document.getElementById('todo-form');
 const todoInput = document.getElementById('todo-input');
 const todoList = document.getElementById('todo-list');
@@ -11,26 +6,18 @@ const filterBtns = document.querySelectorAll('.filter-btn');
 const clearCompletedBtn = document.getElementById('clear-completed-btn');
 const themeToggleBtn = document.getElementById('theme-toggle-btn');
 
-// Edit Modal Elements
 const editDialog = document.getElementById('edit-dialog');
 const editForm = document.getElementById('edit-form');
 const editInput = document.getElementById('edit-input');
 const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
-// Storage Keys
 const STORAGE_KEY = 'taskmaster_todos';
 const THEME_KEY = 'taskmaster_theme';
 
-// ==========================================
-// 2. Application State
-// ==========================================
 let todos = loadTodos();
 let currentFilter = 'all';
 let editingTodoId = null;
 
-// ==========================================
-// 3. Storage & Theme Helpers
-// ==========================================
 function saveTodos() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
 }
@@ -42,15 +29,10 @@ function loadTodos() {
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  if (themeToggleBtn) {
-    themeToggleBtn.textContent = theme === 'light' ? '☀️' : '🌙';
-  }
+  themeToggleBtn.textContent = theme === 'light' ? '☀️' : '🌙';
   localStorage.setItem(THEME_KEY, theme);
 }
 
-// ==========================================
-// 4. UI Render Engine
-// ==========================================
 function updateTaskCounter() {
   const activeCount = todos.filter(t => !t.completed).length;
   taskCounter.textContent = `${activeCount} task${activeCount === 1 ? '' : 's'} remaining`;
@@ -63,24 +45,21 @@ function getFilteredTodos() {
 }
 
 function renderTodos() {
-  saveTodos(); // Save current state to LocalStorage on every UI update
+  saveTodos();
   todoList.innerHTML = '';
 
   const filteredTodos = getFilteredTodos();
 
-  // Render Empty State Placeholder
   if (filteredTodos.length === 0) {
-    const filterText = currentFilter !== 'all' ? ` ${currentFilter}` : '';
     todoList.innerHTML = `
       <li class="empty-state">
-        🎉 No${filterText} tasks found.
+        No ${currentFilter !== 'all' ? currentFilter : ''} tasks found.
       </li>
     `;
     updateTaskCounter();
     return;
   }
 
-  // Render List Items
   filteredTodos.forEach((todo) => {
     const li = document.createElement('li');
     li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
@@ -100,34 +79,22 @@ function renderTodos() {
   updateTaskCounter();
 }
 
-// ==========================================
-// 5. Event Handlers & Listeners
-// ==========================================
-
-// Add New Task Form Submission
+// Event Listeners
 todoForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const text = todoInput.value.trim();
 
-  // Guard against empty submissions
   if (!text) {
     todoInput.classList.add('error');
     setTimeout(() => todoInput.classList.remove('error'), 600);
     return;
   }
 
-  const newTodo = {
-    id: Date.now(),
-    text: text,
-    completed: false
-  };
-
-  todos.push(newTodo);
+  todos.push({ id: Date.now(), text, completed: false });
   todoInput.value = '';
   renderTodos();
 });
 
-// Delegation Handler for Toggle, Edit, and Delete
 todoList.addEventListener('click', (e) => {
   const target = e.target;
   const li = target.closest('li');
@@ -136,11 +103,9 @@ todoList.addEventListener('click', (e) => {
   const id = Number(li.dataset.id);
 
   if (target.classList.contains('delete-btn')) {
-    // Delete Task
     todos = todos.filter(todo => todo.id !== id);
     renderTodos();
   } else if (target.classList.contains('edit-btn')) {
-    // Open Edit Modal
     const todo = todos.find(t => t.id === id);
     if (todo) {
       editingTodoId = id;
@@ -148,18 +113,14 @@ todoList.addEventListener('click', (e) => {
       editDialog.showModal();
     }
   } else {
-    // Toggle Completion Status
     todos = todos.map(todo => {
-      if (todo.id === id) {
-        return { ...todo, completed: !todo.completed };
-      }
+      if (todo.id === id) return { ...todo, completed: !todo.completed };
       return todo;
     });
     renderTodos();
   }
 });
 
-// Filter Buttons Handler
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     filterBtns.forEach(b => b.classList.remove('active'));
@@ -169,19 +130,16 @@ filterBtns.forEach(btn => {
   });
 });
 
-// Clear Completed Tasks
-if (clearCompletedBtn) {
-  clearCompletedBtn.addEventListener('click', () => {
-    todos = todos.filter(todo => !todo.completed);
-    renderTodos();
-  });
-}
+clearCompletedBtn.addEventListener('click', () => {
+  todos = todos.filter(todo => !todo.completed);
+  renderTodos();
+});
 
-// Edit Form Modal Submission
+cancelEditBtn.addEventListener('click', () => editDialog.close());
+
 editForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const newText = editInput.value.trim();
-  
   if (!newText || !editingTodoId) return;
 
   todos = todos.map(t => (t.id === editingTodoId ? { ...t, text: newText } : t));
@@ -189,25 +147,11 @@ editForm.addEventListener('submit', (e) => {
   renderTodos();
 });
 
-// Cancel Edit Button
-if (cancelEditBtn) {
-  cancelEditBtn.addEventListener('click', () => {
-    editDialog.close();
-  });
-}
+themeToggleBtn.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
 
-// Theme Switcher Toggle
-if (themeToggleBtn) {
-  themeToggleBtn.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    applyTheme(newTheme);
-  });
-}
-
-// ==========================================
-// 6. Application Startup Initialization
-// ==========================================
-const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
-applyTheme(savedTheme);
+// App Startup
+applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
 renderTodos();
