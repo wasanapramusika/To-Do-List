@@ -24,6 +24,12 @@
       <button type="submit" id="add-btn" class="btn btn-primary">Add Task</button>
     </form>
 
+    <nav class="filter-nav" aria-label="Task filters">
+  <button type="button" class="filter-btn active" data-filter="all">All</button>
+  <button type="button" class="filter-btn" data-filter="active">Active</button>
+  <button type="button" class="filter-btn" data-filter="completed">Completed</button>
+</nav>
+
     <ul id="todo-list" class="todo-list" aria-live="polite">
       <li class="todo-item" data-id="demo-1">
         <span class="task-text">Example initial task</span>
