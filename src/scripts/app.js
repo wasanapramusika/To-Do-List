@@ -241,5 +241,24 @@ todoList.addEventListener('click', (e) => {
   }
 });
 
-// App Initialization
 renderTodos();
+
+
+let currentFilter = 'all';
+
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTodos();
+  });
+});
+
+function getFilteredTodos() {
+  if (currentFilter === 'active') return todos.filter(t => !t.completed);
+  if (currentFilter === 'completed') return todos.filter(t => t.completed);
+  return todos;
+}
