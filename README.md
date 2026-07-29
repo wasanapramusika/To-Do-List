@@ -6,7 +6,7 @@
 - Student 3:[Pramudika Madushani] - [ITBIN-2414-0024] - Role: [DevOps/Release Manager] 
 
 ## Project Description
-[Provide a brief description of what your application does, its purpose, and core value proposition.]
+Task Master is a lightweight, responsive, client-side To-Do application built using modern HTML5, CSS3, and JavaScript (ES6+). It leverages Web Storage (local Storage) to act as a client-side persistence layer and uses native browser APIs like <dialog> for seamless state management without heavy dependencies.
 
 ## Live Deployment
 🔗 **Live URL:** [https://to-do-list-delta-peach.vercel.app/]
