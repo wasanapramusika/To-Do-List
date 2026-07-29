@@ -1,0 +1,38 @@
+🚀 Task Master — Release Notes (v1.2.0)
+📌 Summary
+Task Master is a lightweight, responsive, client-side To-Do application built using modern HTML5, CSS3, and JavaScript (ES6+). It leverages Web Storage (localStorage) to act as a client-side persistence layer and uses native browser APIs like <dialog> for seamless state management without heavy dependencies.
+
+📦 Key Features
+🏗️ Structure & Semantics (HTML Phase)
+Semantic Landmark Setup: Built with modern <main>, <header>, <nav>, <form>, and <footer> elements.
+
+Accessibility (a11y): Added aria-live="polite" region for real-time task count updates, clear aria-label attributes on icon actions, and structured modal semantics.
+
+Native Modals: Utilized native HTML <dialog> element for inline task editing.
+
+🎨 Design & Visual Engineering (CSS Phase)
+Design Token Engine: Built with CSS custom properties (:root) managing colors, border radii, shadows, and transitions.
+
+Dark / Light Theme System: Smooth theme transitions using the [data-theme] attribute selector.
+
+Responsive Layout: Responsive container styling with glassmorphism dialog backdrops (backdrop-filter: blur()).
+
+Micro-interactions & Micro-animations: Shaking animation (@keyframes inputError) for input validation feedback and custom focus rings (:focus-visible).
+
+⚡ Logic & Persistence (JavaScript Phase)
+CRUD Operations: Create, Read, Update (inline text modification), and Delete tasks dynamically.
+
+Event Delegation: Optimized DOM performance by attaching event routing directly to parent containers (<ul>).
+
+View Filtering: Filter views dynamically by All, Active, and Completed status without mutating core dataset.
+
+Batch Processing: "Clear Completed" functionality to remove done items at once.
+
+Browser Backend (LocalStorage): Automatic JSON serialization and state hydration across session reloads and theme toggling.
+
+📂 Deliverable Artifacts
+index.html — Application structure and accessible elements.
+
+style.css — Modern design system, theme variables, and keyframes.
+
+script.js — Modular state engine and browser persistence layer.
