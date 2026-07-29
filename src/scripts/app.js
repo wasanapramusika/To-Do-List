@@ -302,3 +302,22 @@ editForm.addEventListener('submit', (e) => {
   editDialog.close();
   renderTodos();
 });
+
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
+const THEME_KEY = 'taskmaster_theme';
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  themeToggleBtn.textContent = theme === 'light' ? '☀️' : '🌙';
+  localStorage.setItem(THEME_KEY, theme);
+}
+
+themeToggleBtn.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme(newTheme);
+});
+
+// Initialize theme from storage
+const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+applyTheme(savedTheme);
