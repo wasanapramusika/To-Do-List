@@ -118,3 +118,26 @@ function loadTodos() {
 
 
 todos = loadTodos();
+
+todoForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const text = todoInput.value.trim();
+
+  // Guard against blank/spaces-only input
+  if (!text) {
+    todoInput.classList.add('error');
+    setTimeout(() => todoInput.classList.remove('error'), 500);
+    return;
+  }
+
+  const newTodo = {
+    id: Date.now(),
+    text: text,
+    completed: false
+  };
+
+  todos.push(newTodo);
+  todoInput.value = '';
+  renderTodos();
+});
