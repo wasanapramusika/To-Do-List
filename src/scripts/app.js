@@ -81,3 +81,26 @@ todoList.addEventListener('click', (e) => {
     renderTodos();
   }
 });
+
+
+todoList.addEventListener('click', (e) => {
+  const target = e.target;
+  const li = target.closest('li');
+  if (!li) return;
+
+  const id = Number(li.dataset.id);
+
+  if (target.classList.contains('delete-btn')) {
+    todos = todos.filter(todo => todo.id !== id);
+    renderTodos();
+  } else {
+    // Toggle completed flag
+    todos = todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+    renderTodos();
+  }
+});
