@@ -1,67 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do List</title>
-  <link rel="stylesheet" href="main.css">
+  <title>Task Master - To-Do List</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app-container" id="app">
-  
-<header class="app-header">
-  <div>
-    <h1 class="app-title">Task Master</h1>
-    <p id="task-counter" class="task-counter">0 tasks remaining</p>
-  </div>
-  <button type="button" id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle color theme">
-    🌙
-  </button>
-</header>
+    <header class="app-header">
+      <div>
+        <h1 class="app-title">Task Master</h1>
+        <p id="task-counter" class="task-counter">0 tasks remaining</p>
+      </div>
+      <button type="button" id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle color theme">🌙</button>
+    </header>
 
     <form id="todo-form" class="todo-form">
-      <input 
-        type="text" 
-        id="todo-input" 
-        class="todo-input" 
-        placeholder="What needs to be done?" 
-        autocomplete="off"
-      >
+      <input type="text" id="todo-input" class="todo-input" placeholder="What needs to be done?" autocomplete="off">
       <button type="submit" id="add-btn" class="btn btn-primary">Add Task</button>
     </form>
 
     <nav class="filter-nav" aria-label="Task filters">
-  <button type="button" class="filter-btn active" data-filter="all">All</button>
-  <button type="button" class="filter-btn" data-filter="active">Active</button>
-  <button type="button" class="filter-btn" data-filter="completed">Completed</button>
-</nav>
+      <button type="button" class="filter-btn active" data-filter="all">All</button>
+      <button type="button" class="filter-btn" data-filter="active">Active</button>
+      <button type="button" class="filter-btn" data-filter="completed">Completed</button>
+    </nav>
 
-    <ul id="todo-list" class="todo-list" aria-live="polite">
-      <li class="todo-item" data-id="demo-1">
-        <span class="task-text">Example initial task</span>
-        <button class="delete-btn" aria-label="Delete task">&times;</button>
-      </li>
-    </ul>
+    <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
+
+    <footer class="app-footer">
+      <button type="button" id="clear-completed-btn" class="btn btn-secondary">Clear Completed</button>
+    </footer>
   </main>
 
-  <footer class="app-footer">
-  <button type="button" id="clear-completed-btn" class="btn btn-secondary">
-    Clear Completed
-  </button>
-</footer>
+  <dialog id="edit-dialog" class="edit-dialog">
+    <form id="edit-form" method="dialog">
+      <h2>Edit Task</h2>
+      <input type="text" id="edit-input" class="todo-input" required>
+      <div class="dialog-actions">
+        <button type="button" id="cancel-edit-btn" class="btn btn-secondary">Cancel</button>
+        <button type="submit" id="save-edit-btn" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </dialog>
 
   <script src="script.js"></script>
-
-  <dialog id="edit-dialog" class="edit-dialog">
-  <form id="edit-form" method="dialog">
-    <h2>Edit Task</h2>
-    <input type="text" id="edit-input" class="todo-input" required>
-    <div class="dialog-actions">
-      <button type="button" id="cancel-edit-btn" class="btn btn-secondary">Cancel</button>
-      <button type="submit" id="save-edit-btn" class="btn btn-primary">Save</button>
-    </div>
-  </form>
-</dialog>
-
 </body>
 </html>
