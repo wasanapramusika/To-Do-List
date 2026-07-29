@@ -241,5 +241,83 @@ todoList.addEventListener('click', (e) => {
   }
 });
 
-
 renderTodos();
+
+
+let currentFilter = 'all';
+
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTodos();
+  });
+});
+
+function getFilteredTodos() {
+  if (currentFilter === 'active') return todos.filter(t => !t.completed);
+  if (currentFilter === 'completed') return todos.filter(t => t.completed);
+  return todos;
+}
+
+
+const clearCompletedBtn = document.getElementById('clear-completed-btn');
+
+clearCompletedBtn.addEventListener('click', () => {
+  todos = todos.filter(todo => !todo.completed);
+  renderTodos();
+});
+
+const editDialog = document.getElementById('edit-dialog');
+const editForm = document.getElementById('edit-form');
+const editInput = document.getElementById('edit-input');
+const cancelEditBtn = document.getElementById('cancel-edit-btn');
+let editingTodoId = null;
+
+function openEditModal(id, currentText) {
+  editingTodoId = id;
+  editInput.value = currentText;
+  editDialog.showModal();
+}
+
+cancelEditBtn.addEventListener('click', () => {
+  editDialog.close();
+});
+
+editForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const newText = editInput.value.trim();
+  if (!newText || !editingTodoId) return;
+
+  todos = todos.map(todo => {
+    if (todo.id === editingTodoId) {
+      return { ...todo, text: newText };
+    }
+    return todo;
+  });
+
+  editDialog.close();
+  renderTodos();
+});
+
+const themeToggleBtn = document.getElementById('theme-toggle-btn');
+const THEME_KEY = 'taskmaster_theme';
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  themeToggleBtn.textContent = theme === 'light' ? '☀️' : '🌙';
+  localStorage.setItem(THEME_KEY, theme);
+}
+
+themeToggleBtn.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme(newTheme);
+});
+
+// Initialize theme from storage
+const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+applyTheme(savedTheme);
