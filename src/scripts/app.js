@@ -6,3 +6,20 @@ const taskCounter = document.getElementById('task-counter');
 
 
 let todos = [];
+
+function renderTodos() {
+  todoList.innerHTML = '';
+
+  todos.forEach((todo) => {
+    const li = document.createElement('li');
+    li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+    li.dataset.id = todo.id;
+
+    li.innerHTML = `
+      <span class="task-text">${todo.text}</span>
+      <button class="delete-btn" aria-label="Delete task">&times;</button>
+    `;
+
+    todoList.appendChild(li);
+  });
+}
