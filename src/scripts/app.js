@@ -152,6 +152,6 @@ themeToggleBtn.addEventListener('click', () => {
   applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
 });
 
-// App Startup
+
 applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
 renderTodos();
