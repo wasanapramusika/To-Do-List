@@ -104,3 +104,17 @@ todoList.addEventListener('click', (e) => {
     renderTodos();
   }
 });
+
+const STORAGE_KEY = 'taskmaster_todos';
+
+function saveTodos() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+}
+
+function loadTodos() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  return stored ? JSON.parse(stored) : [];
+}
+
+
+todos = loadTodos();
