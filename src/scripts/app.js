@@ -262,3 +262,11 @@ function getFilteredTodos() {
   if (currentFilter === 'completed') return todos.filter(t => t.completed);
   return todos;
 }
+
+
+const clearCompletedBtn = document.getElementById('clear-completed-btn');
+
+clearCompletedBtn.addEventListener('click', () => {
+  todos = todos.filter(todo => !todo.completed);
+  renderTodos();
+});
