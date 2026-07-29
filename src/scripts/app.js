@@ -262,3 +262,43 @@ function getFilteredTodos() {
   if (currentFilter === 'completed') return todos.filter(t => t.completed);
   return todos;
 }
+
+
+const clearCompletedBtn = document.getElementById('clear-completed-btn');
+
+clearCompletedBtn.addEventListener('click', () => {
+  todos = todos.filter(todo => !todo.completed);
+  renderTodos();
+});
+
+const editDialog = document.getElementById('edit-dialog');
+const editForm = document.getElementById('edit-form');
+const editInput = document.getElementById('edit-input');
+const cancelEditBtn = document.getElementById('cancel-edit-btn');
+let editingTodoId = null;
+
+function openEditModal(id, currentText) {
+  editingTodoId = id;
+  editInput.value = currentText;
+  editDialog.showModal();
+}
+
+cancelEditBtn.addEventListener('click', () => {
+  editDialog.close();
+});
+
+editForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const newText = editInput.value.trim();
+  if (!newText || !editingTodoId) return;
+
+  todos = todos.map(todo => {
+    if (todo.id === editingTodoId) {
+      return { ...todo, text: newText };
+    }
+    return todo;
+  });
+
+  editDialog.close();
+  renderTodos();
+});
