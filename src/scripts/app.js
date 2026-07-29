@@ -49,3 +49,21 @@ function renderTodos() {
 
   updateTaskCounter();
 }
+
+
+todoForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const text = todoInput.value.trim();
+  if (!text) return;
+
+  const newTodo = {
+    id: Date.now(),
+    text: text,
+    completed: false
+  };
+
+  todos.push(newTodo);
+  todoInput.value = '';
+  renderTodos();
+});
