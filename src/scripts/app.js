@@ -241,5 +241,5 @@ todoList.addEventListener('click', (e) => {
   }
 });
 
-// App Initialization
+
 renderTodos();
