@@ -127,7 +127,11 @@ todoForm.addEventListener('submit', (e) => {
   // Guard against blank/spaces-only input
   if (!text) {
     todoInput.classList.add('error');
+<<<<<<< HEAD
     setTimeout(() => todoInput.classList.remove('error'), 600);
+=======
+    setTimeout(() => todoInput.classList.remove('error'), 600);
+>>>>>>> test
     return;
   }
 
